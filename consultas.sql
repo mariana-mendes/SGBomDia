@@ -1,3 +1,7 @@
+DROP VIEW VALORES_DIARIOS_BODOCONGO;
+DROP VIEW ESTACOES_RIOS_PERNAMBUCO;
+DROP TRIGGER VERIFICA_VALOR_COTA;
+DROP TRIGGER VERIFICA_DATA_MEDICAO;
 /* 1. Liste o nome dos usuários que não cadastraram nenhuma medição, seja ela pluviométrica ou de cota diária. */
 
 SELECT u.nome
@@ -35,8 +39,7 @@ CREATE VIEW ESTACOES_RIOS_PERNAMBUCO(estacao_PE,nome_PE) AS
            pp.idBacia = b.idBacia AND
            b.idBacia = r.idBacia AND
            eq.idRio = r.idRio);
-SELECT *
-FROM VALORES_DIARIOS_BODOCONGO;
+
 
 /* 4. Liste os nomes dos postos pluviométricos e seus estados, agrupados pelo nome do estado.*/
 
@@ -86,18 +89,17 @@ CREATE TRIGGER VERIFICA_VALOR_COTA
             END IF;
         END VERIFICA_VALOR_COTA;
 
-/
 
 /*tentativa de update de uma cota_area_volume */        
 UPDATE Cota_Area_Volume
 SET cota = 5
 WHERE id = 1;        
         
-
+/
 
 
 /*9. Faça um trigger que, ao tentar inserir uma medição pluviométrica de um posto com uma data posterior ao dia atual, seja feita a inserção usando a data atual.*/
-CREATE TRIGGER VERIFICA_DATA_MEDICAO
+CREATE OR REPLACE TRIGGER VERIFICA_DATA_MEDICAO
     BEFORE INSERT OR UPDATE ON DiaMedPluviometrica
     FOR EACH ROW
         BEGIN
@@ -105,11 +107,13 @@ CREATE TRIGGER VERIFICA_DATA_MEDICAO
                 :new.data := SYSDATE;
             END IF;
          END VERIFICA_DATA_MEDICAO;   
-/
 
 INSERT INTO MedicaoPluviometrica VALUES(9,2,115210937);
  /*INSERINDO UMA MEDIÇÃO COM UMA DATA INVALIDA(POSTERIOR AO DIA ATUAL)*/
-INSERT INTO DiaMedPluviometrica VALUES(100,'01/01/2019',9);      
+INSERT INTO DiaMedPluviometrica VALUES(100,'01/01/2019',9);         
+         
+         
+/
         
 /* 10. Liste os valores de DBO medidos para o rio Amazonas entre os dias 02/11/2017 e 02/01/2018.*/
 
@@ -125,7 +129,12 @@ SELECT MAX(cotaAtual)
     WHERE a.nome = 'Bodocongó' AND
           mcd.idAcude = a.idAcude AND
           mcd.data BETWEEN '01-01-2018'AND '02-01-2018';
-
+          
+/*12. Qual foi o valor total de chuvas no açude de Coremas pro mês de Janeiro/2018?*/
+SELECT SUM(dp.valorChuva)
+FROM DiaMedPluviometrica dp, MedicaoPluviometrica mp, PostoPluviometrico pp, Acude a, Contribui_Posto_Acude cpa
+WHERE (dp.idMedicao = mp.idMedicao AND mp.idPostoPluviometrico = pp.idPostoPluviometrico AND pp.idPostoPluviometrico = cpa.idPostoPluviometrico AND
+      cpa.idAcude = a.idAcude AND a.nome = 'Coremas' AND dp.data BETWEEN '01-01-2018' AND '01-31-2018');
 
 /* 13. Qual o nível médio de oxigênio medido no mês de novembro pro açude de Coremas?*/
 
