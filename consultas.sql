@@ -86,17 +86,18 @@ CREATE TRIGGER VERIFICA_VALOR_COTA
             END IF;
         END VERIFICA_VALOR_COTA;
 
+/
 
 /*tentativa de update de uma cota_area_volume */        
 UPDATE Cota_Area_Volume
 SET cota = 5
 WHERE id = 1;        
         
-/
+
 
 
 /*9. Faça um trigger que, ao tentar inserir uma medição pluviométrica de um posto com uma data posterior ao dia atual, seja feita a inserção usando a data atual.*/
-CREATE OR REPLACE TRIGGER VERIFICA_DATA_MEDICAO
+CREATE TRIGGER VERIFICA_DATA_MEDICAO
     BEFORE INSERT OR UPDATE ON DiaMedPluviometrica
     FOR EACH ROW
         BEGIN
@@ -104,13 +105,11 @@ CREATE OR REPLACE TRIGGER VERIFICA_DATA_MEDICAO
                 :new.data := SYSDATE;
             END IF;
          END VERIFICA_DATA_MEDICAO;   
+/
 
 INSERT INTO MedicaoPluviometrica VALUES(9,2,115210937);
  /*INSERINDO UMA MEDIÇÃO COM UMA DATA INVALIDA(POSTERIOR AO DIA ATUAL)*/
-INSERT INTO DiaMedPluviometrica VALUES(100,'01/01/2019',9);         
-         
-         
-/
+INSERT INTO DiaMedPluviometrica VALUES(100,'01/01/2019',9);      
         
 /* 10. Liste os valores de DBO medidos para o rio Amazonas entre os dias 02/11/2017 e 02/01/2018.*/
 
