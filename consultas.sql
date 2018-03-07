@@ -115,7 +115,7 @@ CREATE TRIGGER VERIFICA_DATA_MEDICAO
 
 INSERT INTO MedicaoPluviometrica VALUES(12,2,115210937);
  /*INSERINDO UMA MEDIÇÃO COM UMA DATA INVALIDA(POSTERIOR AO DIA ATUAL)*/
-INSERT INTO DiaMedPluviometrica VALUES(100,'01/01/2019',9);      
+INSERT INTO DiaMedPluviometrica VALUES(100,'01/01/2019',12);      
         
 /* 10. Liste os valores de DBO medidos para o rio Amazonas entre os dias 02/11/2017 e 02/01/2018.*/
 
