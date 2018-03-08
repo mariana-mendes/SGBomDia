@@ -3,12 +3,15 @@ INSERT INTO Usuario VALUES(115211452,'Mariana');
 INSERT INTO Usuario VALUES(115210937,'Leal');
 INSERT INTO Usuario VALUES(115210469,'Maciel');
 INSERT INTO Usuario VALUES(116210629,'Tiago');
- 
+INSERT INTO Usuario VALUES(115222409,'Tiago');
+
 /*BACIAS*/
 INSERT INTO Bacia VALUES(1,'Bacia Rio Paraíba',20000,400);
 INSERT INTO Bacia VALUES(2,'Bacia Rios PE',20000,400);
 INSERT INTO Bacia VALUES(45,'Bacia Rio Curu',10000,200);
-INSERT INTO Bacia VALUES(3,'Bacia Rio Jaboatão',40000,800);            
+INSERT INTO Bacia VALUES(3,'Bacia Rio Jaboatão',40000,800); 
+INSERT INTO Bacia VALUES(8,'Bacia de Boqueirão',4000,900); 
+
 /*RIOS*/
 INSERT INTO Rio VALUES(1,'Rio Paraíba','indicador do rio',1);
 INSERT INTO Rio VALUES(2,'Rio Ipojuca','indicador do rio',2);            
@@ -51,11 +54,18 @@ INSERT INTO Medicao_Cota_Diaria VALUES(11,19,'03-09-2017',116210629,1);
 INSERT INTO MedicaoPluviometrica VALUES(1,1,115211452);
 INSERT INTO MedicaoPluviometrica VALUES(2,1,115210937);
 INSERT INTO MedicaoPluviometrica VALUES(3,2,115210937);
- 
+INSERT INTO MedicaoPluviometrica VALUES(4,2,115210937);
+INSERT INTO MedicaoPluviometrica VALUES(5,2,115210937);
+INSERT INTO MedicaoPluviometrica VALUES(6,2,115210937);
+
+
 /*DIAS MEDIÇÕES PLUVIOMÉTRICAS*/
 INSERT INTO DiaMedPluviometrica VALUES(100,'01/01/2017',1);
 INSERT INTO DiaMedPluviometrica VALUES(100,'02/01/2017',2);
 INSERT INTO DiaMedPluviometrica VALUES(400,'02/01/2017',3);
+INSERT INTO DiaMedPluviometrica VALUES(400,'02/01/2017',4);
+INSERT INTO DiaMedPluviometrica VALUES(400,'02/01/2017',5);
+INSERT INTO DiaMedPluviometrica VALUES(400,'02/01/2017',6);
  
 /*CONTRIBUI POSTO AÇUDE */
 INSERT INTO Contribui_Posto_Acude VALUES(1,1);
@@ -71,9 +81,9 @@ INSERT INTO EstacaoQualidade VALUES(5,'Estacao-Pernambuco-3',2,3,5,5);
 INSERT INTO EstacaoQualidade VALUES(6,'Estacao-Pernambuco-3',2,3,6,5);
 INSERT INTO EstacaoQualidade VALUES(7,'Estacao-amazonas-1',2,3,7,5);  
 INSERT INTO EstacaoQualidade VALUES(8,'Estacao-amazonas-2',2,3,7,5);
-INSERT INTO EstacaoQualidade VALUES(66,'estacao de bodocongo',1,2,1,1);
-INSERT INTO EstacaoQualidade VALUES(67,'estacao academica de bodocongo',1,2,1,1);
-INSERT INTO EstacaoQualidade VALUES(68,'estacao do acude velho',3,3,1,55);
+INSERT INTO EstacaoQualidade VALUES(66,'Estacao de bodocongo',1,2,1,1);
+INSERT INTO EstacaoQualidade VALUES(67,'Estacao academica de bodocongo',1,2,1,1);
+INSERT INTO EstacaoQualidade VALUES(68,'Estacao do acude velho',3,3,1,55);
  
 /*MEDICOES RIOS E ACUDES - Problemas na implementação */
 INSERT INTO MedicaoRio VALUES('02-02-1996',5,2,1,6,6,1);
