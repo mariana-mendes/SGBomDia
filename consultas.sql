@@ -25,6 +25,9 @@ CREATE OR REPLACE VIEW VALORES_DIARIOS_BODOCONGO(VALORES_CHUVA) AS
           cpa.idAcude = a.idAcude AND
           a.nome = 'Bodocongó';
           
+/* Consulta na view para mostrar sua criação*/
+SELECT *
+FROM VALORES_DIARIOS_BODOCONGO;    
 
 /*3. Crie uma visão que liste os nomes de todas as estações de qualidade que já realizaram medições para rios de Pernambuco, bem como o nome do rio.*/
 
@@ -35,7 +38,10 @@ CREATE OR REPLACE VIEW ESTACOES_RIOS_PERNAMBUCO(estacao_PE,nome_PE) AS
            pp.idBacia = b.idBacia AND
            b.idBacia = r.idBacia AND
            eq.idRio = r.idRio);
-
+           
+/* Consulta na view para mostrar sua criação*/
+SELECT *
+FROM ESTACOES_RIOS_PERNAMBUCO;
 
 /* 4. Liste os nomes dos postos pluviométricos e seus estados, agrupados pelo nome do estado.*/
 
