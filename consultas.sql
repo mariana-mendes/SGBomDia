@@ -1,9 +1,3 @@
-DROP VIEW VALORES_DIARIOS_BODOCONGO;
-DROP VIEW ESTACOES_RIOS_PERNAMBUCO;
-DROP TRIGGER VERIFICA_VALOR_COTA;
-DROP TRIGGER VERIFICA_DATA_MEDICAO;
-
-
 /* 1. Liste o nome dos usuários que não cadastraram nenhuma medição, seja ela pluviométrica ou de cota diária. */
 
 SELECT u.nome
@@ -22,7 +16,7 @@ WHERE u.idMatricula in(
 
 /* 2. Crie uma visão que liste os valores de chuva diários medidos para o açude de Bodocongó.*/
 
-CREATE VIEW VALORES_DIARIOS_BODOCONGO(VALORES_CHUVA) AS   
+CREATE OR REPLACE VIEW VALORES_DIARIOS_BODOCONGO(VALORES_CHUVA) AS   
     SELECT valorChuva
     FROM DiaMedPluviometrica diaMed, MedicaoPluviometrica med, PostoPluviometrico posto, Contribui_Posto_Acude cpa, Acude a
     WHERE diaMed.idMedicao = med.idMedicao AND 
@@ -34,15 +28,14 @@ CREATE VIEW VALORES_DIARIOS_BODOCONGO(VALORES_CHUVA) AS
 
 /*3. Crie uma visão que liste os nomes de todas as estações de qualidade que já realizaram medições para rios de Pernambuco, bem como o nome do rio.*/
 
-CREATE VIEW ESTACOES_RIOS_PERNAMBUCO(estacao_PE,nome_PE) AS 
+CREATE OR REPLACE VIEW ESTACOES_RIOS_PERNAMBUCO(estacao_PE,nome_PE) AS 
     SELECT DISTINCT eq.nome, r.nome
     FROM Bacia b, Rio r, PostoPluviometrico pp, EstacaoQualidade eq
     WHERE( pp.estado = 'Pernambuco' AND
            pp.idBacia = b.idBacia AND
            b.idBacia = r.idBacia AND
            eq.idRio = r.idRio);
-SELECT *
-FROM VALORES_DIARIOS_BODOCONGO;
+
 
 /* 4. Liste os nomes dos postos pluviométricos e seus estados, agrupados pelo nome do estado.*/
 
@@ -80,43 +73,8 @@ SELECT alcalinidade AS alcalinidade_Bodocongo
     USING (idEstacaoQualidade)
 ORDER BY alcalinidade DESC;
 
+/*8 e 9 No script de inserções. */
 
-/*8. Faça um trigger que não permita a atualização do valor da cota de uma Cota Área Volume já existente.*/
-
-CREATE TRIGGER VERIFICA_VALOR_COTA
-    BEFORE UPDATE ON Cota_Area_Volume 
-    FOR EACH ROW 
-        BEGIN
-            IF (:old.cota is not NULL) THEN
-                :new.cota := :old.cota;
-            END IF;
-        END VERIFICA_VALOR_COTA;
-
-/
-
-/*tentativa de update de uma cota_area_volume */        
-UPDATE Cota_Area_Volume
-SET cota = 5
-WHERE id = 1;        
-        
-
-
-
-/*9. Faça um trigger que, ao tentar inserir uma medição pluviométrica de um posto com uma data posterior ao dia atual, seja feita a inserção usando a data atual.*/
-CREATE TRIGGER VERIFICA_DATA_MEDICAO
-    BEFORE INSERT OR UPDATE ON DiaMedPluviometrica
-    FOR EACH ROW
-        BEGIN
-            IF(:new.data > SYSDATE) THEN
-                :new.data := SYSDATE;
-            END IF;
-         END VERIFICA_DATA_MEDICAO;   
-/
-
-INSERT INTO MedicaoPluviometrica VALUES(12,2,115210937);
- /*INSERINDO UMA MEDIÇÃO COM UMA DATA INVALIDA(POSTERIOR AO DIA ATUAL)*/
-INSERT INTO DiaMedPluviometrica VALUES(100,'01/01/2019',12);      
-        
 /* 10. Liste os valores de DBO medidos para o rio Amazonas entre os dias 02/11/2017 e 02/01/2018.*/
 
 SELECT DBO

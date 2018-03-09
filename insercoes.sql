@@ -1,3 +1,27 @@
+/*8. Faça um trigger que não permita a atualização do valor da cota de uma Cota Área Volume já existente.*/
+
+CREATE OR REPLACE TRIGGER VERIFICA_VALOR_COTA
+    BEFORE UPDATE ON Cota_Area_Volume 
+    FOR EACH ROW 
+        BEGIN
+            IF (:old.cota is not NULL) THEN
+                :new.cota := :old.cota;
+            END IF;
+        END VERIFICA_VALOR_COTA;
+
+/
+
+/*9. Faça um trigger que, ao tentar inserir uma medição pluviométrica de um posto com uma data posterior ao dia atual, seja feita a inserção usando a data atual.*/
+CREATE OR REPLACE TRIGGER VERIFICA_DATA_MEDICAO
+    BEFORE INSERT OR UPDATE ON DiaMedPluviometrica
+    FOR EACH ROW
+        BEGIN
+            IF(:new.data > SYSDATE) THEN
+                :new.data := SYSDATE;
+            END IF;
+         END VERIFICA_DATA_MEDICAO;   
+/
+
 /*Usuários criados*/
 INSERT INTO Usuario VALUES(115211452,'Mariana');
 INSERT INTO Usuario VALUES(115210937,'Leal');
@@ -57,6 +81,7 @@ INSERT INTO MedicaoPluviometrica VALUES(3,2,115210937);
 INSERT INTO MedicaoPluviometrica VALUES(4,2,115210937);
 INSERT INTO MedicaoPluviometrica VALUES(5,2,115210937);
 INSERT INTO MedicaoPluviometrica VALUES(6,2,115210937);
+INSERT INTO MedicaoPluviometrica VALUES(12,2,115210937);
 
 /*DIAS MEDIÇÕES PLUVIOMÉTRICAS*/
 INSERT INTO DiaMedPluviometrica VALUES(100,'01/01/2017',1);
@@ -65,14 +90,13 @@ INSERT INTO DiaMedPluviometrica VALUES(400,'02/01/2017',3);
 INSERT INTO DiaMedPluviometrica VALUES(300,'01/01/2018',4);
 INSERT INTO DiaMedPluviometrica VALUES(400,'01/11/2018',4);
 INSERT INTO DiaMedPluviometrica VALUES(30,'05/05/2018',4);
-/*CONTRIBUI POSTO AÇUDE */
-INSERT INTO Contribui_Posto_Acude VALUES(1,1);
-INSERT INTO Contribui_Posto_Acude VALUES(1,2);
-INSERT INTO Contribui_Posto_Acude VALUES(5,2);
-
 INSERT INTO DiaMedPluviometrica VALUES(400,'02/01/2017',4);
 INSERT INTO DiaMedPluviometrica VALUES(400,'02/01/2017',5);
 INSERT INTO DiaMedPluviometrica VALUES(400,'02/01/2017',6);
+ /*INSERINDO UMA MEDIÇÃO COM UMA DATA INVALIDA(POSTERIOR AO DIA ATUAL, TESTANDO TRIGGER)*/
+INSERT INTO DiaMedPluviometrica VALUES(100,'01/01/2019',12);      
+   
+        
  
 /*CONTRIBUI POSTO AÇUDE */
 INSERT INTO Contribui_Posto_Acude VALUES(1,1);
@@ -113,3 +137,7 @@ INSERT INTO Cota_Area_Volume VALUES(2,25,810,10,3);
 INSERT INTO Cota_Area_Volume VALUES(3,26,610,10,5);
 INSERT INTO Cota_Area_Volume VALUES(4,67,310,10,55);
 INSERT INTO Cota_Area_Volume VALUES(5,34,13,10,4);
+/*TENTATIVA DE UPDATE DE UMA COTA_AREA_VOLUME*/        
+UPDATE Cota_Area_Volume
+SET cota = 5
+WHERE id = 1;

@@ -11,8 +11,8 @@ João Mauricio Alves Valverde Carvalho, 115211593
 create table Bacia(
     idBacia integer primary key,
     nome varchar(20) not null,
-    area float(2)not null,
-    perimetro float(2)not null
+    area float(24)not null,
+    perimetro float(24)not null
 );
  
  
@@ -29,9 +29,9 @@ create table Rio(
 create table Acude(
     idAcude integer primary key,
     nome varchar(30) not null,
-    volumeMax float(2) not null,
-    comprimento float(2) not null,
-    area float(2) not null,
+    volumeMax float(24) not null,
+    comprimento float(24) not null,
+    area float(24) not null,
     idRio integer not null,
     foreign key (idRio) references Rio(idRio)
  
@@ -45,8 +45,8 @@ create table Usuario (
 create table EstacaoQualidade (
     idEstacaoQualidade integer primary key,
     nome varchar(30) not null,
-    latitude float(7) not null,
-    longitude float(7) not null,
+    latitude float(24) not null,
+    longitude float(24) not null,
     idRio integer not null,
     idAcude integer not null,
     foreign key (idAcude) references Acude(idAcude),
@@ -55,11 +55,11 @@ create table EstacaoQualidade (
  
 create table MedicaoRio(
     data date not null,
-    ph float(2) not null,
-    DBO float(2) not null,
+    ph float(24) not null,
+    DBO float(24) not null,
     turbidez integer not null,
-    oxigenio float(2) not null,
-    alcalinidade float(2) not null,
+    oxigenio float(24) not null,
+    alcalinidade float(24) not null,
     idEstacaoQualidade integer not null,
     foreign key (idEstacaoQualidade) references EstacaoQualidade(idEstacaoQualidade),
     primary key (idEstacaoQualidade)
@@ -69,9 +69,9 @@ create table MedicaoRio(
  
 create table Cota_Area_Volume (
     id integer primary key,
-    cota float(2) not null,
-    area float(2) not null,
-    volume float(2) not null,
+    cota float(24) not null,
+    area float(24) not null,
+    volume float(24) not null,
     idAcude integer not null,
     foreign key (idAcude) references Acude(idAcude)
 );
@@ -107,7 +107,7 @@ create table DiaMedPluviometrica(
  
 create table Medicao_Cota_Diaria (
     idMedicaoDiaria integer primary key,
-    cotaAtual float(2) not null,
+    cotaAtual float(24) not null,
     data date not null,
     idMatricula integer not null,
     idAcude integer not null,
