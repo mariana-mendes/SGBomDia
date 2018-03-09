@@ -1,3 +1,9 @@
+DROP VIEW VALORES_DIARIOS_BODOCONGO;
+DROP VIEW ESTACOES_RIOS_PERNAMBUCO;
+DROP TRIGGER VERIFICA_VALOR_COTA;
+DROP TRIGGER VERIFICA_DATA_MEDICAO;
+
+
 /* 1. Liste o nome dos usuários que não cadastraram nenhuma medição, seja ela pluviométrica ou de cota diária. */
 
 SELECT u.nome
@@ -107,9 +113,9 @@ CREATE TRIGGER VERIFICA_DATA_MEDICAO
          END VERIFICA_DATA_MEDICAO;   
 /
 
-INSERT INTO MedicaoPluviometrica VALUES(9,2,115210937);
+INSERT INTO MedicaoPluviometrica VALUES(12,2,115210937);
  /*INSERINDO UMA MEDIÇÃO COM UMA DATA INVALIDA(POSTERIOR AO DIA ATUAL)*/
-INSERT INTO DiaMedPluviometrica VALUES(100,'01/01/2019',9);      
+INSERT INTO DiaMedPluviometrica VALUES(100,'01/01/2019',12);      
         
 /* 10. Liste os valores de DBO medidos para o rio Amazonas entre os dias 02/11/2017 e 02/01/2018.*/
 
@@ -126,6 +132,11 @@ SELECT MAX(cotaAtual)
           mcd.idAcude = a.idAcude AND
           mcd.data BETWEEN '01-01-2018'AND '02-01-2018';
 
+/*12. Qual foi o valor total de chuvas no açude de Coremas pro mês de Janeiro/2018?*/
+SELECT SUM(dp.valorChuva)
+FROM DiaMedPluviometrica dp, MedicaoPluviometrica mp, PostoPluviometrico pp, Acude a, Contribui_Posto_Acude cpa
+WHERE (dp.idMedicao = mp.idMedicao AND mp.idPostoPluviometrico = pp.idPostoPluviometrico AND pp.idPostoPluviometrico = cpa.idPostoPluviometrico AND
+      cpa.idAcude = a.idAcude AND a.nome = 'Coremas' AND dp.data BETWEEN '01-01-2018' AND '01-31-2018');
 
 /* 13. Qual o nível médio de oxigênio medido no mês de novembro pro açude de Coremas?*/
 
@@ -155,6 +166,3 @@ WHERE u.idMatricula =
     FROM Medicao_Cota_Diaria
     GROUP BY idMatricula ORDER BY COUNT(idMatricula) DESC)
 where rownum = 1);  
-
-
-

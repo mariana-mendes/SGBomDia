@@ -58,11 +58,18 @@ INSERT INTO MedicaoPluviometrica VALUES(4,2,115210937);
 INSERT INTO MedicaoPluviometrica VALUES(5,2,115210937);
 INSERT INTO MedicaoPluviometrica VALUES(6,2,115210937);
 
-
 /*DIAS MEDIÇÕES PLUVIOMÉTRICAS*/
 INSERT INTO DiaMedPluviometrica VALUES(100,'01/01/2017',1);
 INSERT INTO DiaMedPluviometrica VALUES(100,'02/01/2017',2);
 INSERT INTO DiaMedPluviometrica VALUES(400,'02/01/2017',3);
+INSERT INTO DiaMedPluviometrica VALUES(300,'01/01/2018',4);
+INSERT INTO DiaMedPluviometrica VALUES(400,'01/11/2018',4);
+INSERT INTO DiaMedPluviometrica VALUES(30,'05/05/2018',4);
+/*CONTRIBUI POSTO AÇUDE */
+INSERT INTO Contribui_Posto_Acude VALUES(1,1);
+INSERT INTO Contribui_Posto_Acude VALUES(1,2);
+INSERT INTO Contribui_Posto_Acude VALUES(5,2);
+
 INSERT INTO DiaMedPluviometrica VALUES(400,'02/01/2017',4);
 INSERT INTO DiaMedPluviometrica VALUES(400,'02/01/2017',5);
 INSERT INTO DiaMedPluviometrica VALUES(400,'02/01/2017',6);
@@ -73,7 +80,6 @@ INSERT INTO Contribui_Posto_Acude VALUES(1,2);
 INSERT INTO Contribui_Posto_Acude VALUES(55,4);
 INSERT INTO Contribui_Posto_Acude VALUES(4,5);
 INSERT INTO Contribui_Posto_Acude VALUES(5,6);
- 
  
 /*Estacao de qualidade*/
 INSERT INTO EstacaoQualidade VALUES(1,'Estacao-Pernambuco-1',2,3,2,4);
